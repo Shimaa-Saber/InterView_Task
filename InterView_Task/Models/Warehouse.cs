@@ -10,5 +10,6 @@ namespace InterView_Task.Models
 
         public List<InventoryTransactions> ? SourceTransactions { get; set; }
         public List<InventoryTransactions>? DestinationTransactions { get; set; }
+        public List<WarehouseStock>? WarehouseStocks { get; set; }
     }
 }

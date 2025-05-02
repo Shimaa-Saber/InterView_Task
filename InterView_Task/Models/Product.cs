@@ -14,5 +14,6 @@ namespace InterView_Task.Models
         public int LowStockThreshold { get; set; }
 
         public List<InventoryTransactions>? Transactions { get; set; }
+        public List<WarehouseStock> WarehouseStocks { get; set; }
     }
 }
