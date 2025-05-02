@@ -1,4 +1,8 @@
 
+using InterView_Task.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace InterView_Task
 {
     public class Program
@@ -8,6 +12,15 @@ namespace InterView_Task
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<dbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
+
+
+            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+                           .AddEntityFrameworkStores<dbContext>()
+                           .AddDefaultTokenProviders();
+
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
