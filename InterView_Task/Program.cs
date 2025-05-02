@@ -1,4 +1,5 @@
 
+using InterView_Task.AutoMapper;
 using InterView_Task.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace InterView_Task
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                            .AddEntityFrameworkStores<dbContext>()
                            .AddDefaultTokenProviders();
-
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
 
             builder.Services.AddControllers();

@@ -1,4 +1,6 @@
-﻿using InterView_Task.Interfaces;
+﻿using AutoMapper;
+using InterView_Task.DTOs.Product;
+using InterView_Task.Interfaces;
 using InterView_Task.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,20 +12,25 @@ namespace InterView_Task.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProduct _productRepository;
-        public ProductController(IProduct productRepository)
+        private readonly IMapper _mapper;
+        public ProductController(IProduct productRepository,
+            IMapper mapper)
+            
         {
             _productRepository = productRepository;
+            _mapper = mapper;
         }
         [HttpGet]
         public IActionResult GetAllProducts()
         {
-            var products = _productRepository.GetAll();
+           List< Product> products = _productRepository.GetAll();
             return Ok(products);
         }
+
         [HttpGet("{id}")]
         public IActionResult GetProductById(int id)
         {
-            var product = _productRepository.GetById(id);
+            Product product = _productRepository.GetById(id);
             if (product == null)
             {
                 return NotFound();
@@ -31,27 +38,50 @@ namespace InterView_Task.Controllers
             return Ok(product);
         }
         [HttpPost]
-        public IActionResult CreateProduct([FromBody] Product product)
+        public IActionResult CreateProduct([FromBody] AddProductDto productDto)
         {
-            if (product == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+                try
+                {
+                    var product = _mapper.Map<Product>(productDto);
+                    _productRepository.Add(product);
+                    _productRepository.Save();
+                    return Ok(product);
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.InnerException.Message);
+                }
             }
-            _productRepository.Add(product);
-            _productRepository.Save();
-            return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
+            return BadRequest(ModelState); 
         }
+
+
+
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, [FromBody] Product product)
+        public IActionResult UpdateProduct(int id, [FromBody] EditProductDto productDto)
         {
-            if (id != product.Id || product == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+              
+                if (productDto != null)
+                {
+                    Product product = _productRepository.GetById(id);
+                    _mapper.Map(product, productDto);
+
+                    _productRepository.Update(product);
+                    _productRepository.Save();
+                    return NoContent();
+                }
+                ModelState.AddModelError("", "Invalid id");
             }
-            _productRepository.Update(product);
-            _productRepository.Save();
-            return NoContent();
+            return BadRequest(ModelState);
         }
+
+
+
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {
