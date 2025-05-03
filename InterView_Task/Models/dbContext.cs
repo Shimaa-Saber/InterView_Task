@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,34 @@ namespace InterView_Task.Models
                 .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.Entity<ApplicationRole>().HasData(
+               new ApplicationRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
+               new ApplicationRole { Id = "2", Name = "User", NormalizedName = "USER" }
+             
+           );
+
+            var adminUserId = Guid.NewGuid().ToString();
+            var hasher = new PasswordHasher<ApplicationUser>();
+            modelBuilder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser
+                {
+                    Id = adminUserId,
+                    UserName = "AdminShimaa",
+                    NormalizedUserName = "ADMIN@EXAMPLE.COM",
+                    Email = "shimaasaber224@gmail.com",
+                    NormalizedEmail = "SHIMAASABER224@GMAIL.COM",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "Admin@1234"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                   
+                    PhoneNumber = "0123456789",
+                    PhoneNumberConfirmed = true
+                }
+            );
+
         }
 
     }

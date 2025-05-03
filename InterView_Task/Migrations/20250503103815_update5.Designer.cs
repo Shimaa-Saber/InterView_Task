@@ -4,6 +4,7 @@ using InterView_Task.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InterView_Task.Migrations
 {
     [DbContext(typeof(dbContext))]
-    partial class dbContextModelSnapshot : ModelSnapshot
+    [Migration("20250503103815_update5")]
+    partial class update5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,25 +138,6 @@ namespace InterView_Task.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "65073535-ae4d-4420-a915-a5c016d126d5",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c2d182f3-b3fa-49df-80c5-db513f001f7c",
-                            Email = "shimaasaber224@gmail.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "SHIMAASABER224@GMAIL.COM",
-                            NormalizedUserName = "ADMIN@EXAMPLE.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEM2ixX71MlnuPwOLr3P55EbBtu6b4wc5KDzsoQuUKok38rdz8RmkrNsnttVRmri28g==",
-                            PhoneNumber = "0123456789",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "fecb0e1f-6be7-4c4c-a91d-47189b0d3c47",
-                            TwoFactorEnabled = false,
-                            UserName = "AdminShimaa"
-                        });
                 });
 
             modelBuilder.Entity("InterView_Task.Models.InventoryTransactions", b =>

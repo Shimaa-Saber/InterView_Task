@@ -2,6 +2,7 @@
 using InterView_Task.DTOs.Product;
 using InterView_Task.Interfaces;
 using InterView_Task.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,14 +21,16 @@ namespace InterView_Task.Controllers
             _productRepository = productRepository;
             _mapper = mapper;
         }
-        [HttpGet]
+       
+        [HttpGet("GetAllProducts")]
         public IActionResult GetAllProducts()
         {
            List< Product> products = _productRepository.GetAll();
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
+       
+        [HttpGet("{id}/GetProductDetailes")]
         public IActionResult GetProductById(int id)
         {
             Product product = _productRepository.GetById(id);
@@ -37,7 +40,8 @@ namespace InterView_Task.Controllers
             }
             return Ok(product);
         }
-        [HttpPost]
+        
+        [HttpPost("AddProduct")]
         public IActionResult CreateProduct([FromForm][FromBody] AddProductDto productDto)
         {
             if (ModelState.IsValid)
@@ -59,8 +63,9 @@ namespace InterView_Task.Controllers
         }
 
 
-
-        [HttpPut("{id}")]
+     
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{id}/UpdateProduct")]
         public IActionResult UpdateProduct(int id, [FromForm][FromBody] EditProductDto productDto)
         {
             if (ModelState.IsValid)
@@ -81,8 +86,8 @@ namespace InterView_Task.Controllers
         }
 
 
-
-        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}/deleteProduct")]
         public IActionResult DeleteProduct(int id)
         {
             var product = _productRepository.GetById(id);

@@ -11,6 +11,10 @@ namespace InterView_Task.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuth _AuthRepository;
+        public AuthController(IAuth authRepository)
+        {
+            _AuthRepository = authRepository;
+        }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(

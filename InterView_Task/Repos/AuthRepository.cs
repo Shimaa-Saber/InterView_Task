@@ -1,5 +1,6 @@
 ﻿using InterView_Task.DTOs.Auth;
 using InterView_Task.GeneralResponse;
+using InterView_Task.Interfaces;
 using InterView_Task.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace InterView_Task.Repos
 {
-    public class AuthRepository
+    public class AuthRepository : IAuth
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -26,17 +27,34 @@ namespace InterView_Task.Repos
             _config = config;
         }
         public async Task<IdentityResult> RegisterUserAsync(RegisterDto userFromConsumer)
-
         {
+           
+            var UserByEmail = await _userManager.FindByEmailAsync(userFromConsumer.Email);
+            if (UserByEmail != null)
+            {
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Code = "DuplicateEmail",
+                    Description = "Email is already in use."
+                });
+            }
+
+            
+            var UserByUsername = await _userManager.FindByNameAsync(userFromConsumer.UserName.Replace(" ", ""));
+            if (UserByUsername != null)
+            {
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Code = "DuplicateUserName",
+                    Description = "Username is already taken."
+                });
+            }
+
+            // Create new user
             ApplicationUser user = new ApplicationUser
             {
-              
                 Email = userFromConsumer.Email,
-             
-                UserName = userFromConsumer.UserName.Replace(" ", ""),
-                PasswordHash = userFromConsumer.Password,
-               
-              
+                UserName = userFromConsumer.UserName.Replace(" ", "")
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, userFromConsumer.Password);
@@ -49,6 +67,7 @@ namespace InterView_Task.Repos
 
             return result;
         }
+
 
 
 

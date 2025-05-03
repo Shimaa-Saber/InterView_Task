@@ -17,9 +17,10 @@ namespace InterView_Task
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddScoped<IAuth, AuthRepository>();
             builder.Services.AddScoped<IProduct, ProductRepository>();
             builder.Services.AddScoped<ITransaction, TransactionRepository>();
+           
             // Add services to the container.
             builder.Services.AddDbContext<dbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));
