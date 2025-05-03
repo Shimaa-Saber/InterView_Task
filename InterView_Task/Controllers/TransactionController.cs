@@ -4,6 +4,7 @@ using InterView_Task.Interfaces;
 using InterView_Task.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace InterView_Task.Controllers
@@ -36,7 +37,8 @@ namespace InterView_Task.Controllers
 
            
             var transactionDto = _mapper.Map<TransactionDto>(dto);
-            _transactionRepository.AddTransaction(transactionDto, User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userid= User.FindFirstValue(ClaimTypes.NameIdentifier);
+            _transactionRepository.AddTransaction(transactionDto, userid);
 
             
              _transactionRepository.Save();

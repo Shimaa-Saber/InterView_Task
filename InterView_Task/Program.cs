@@ -20,7 +20,8 @@ namespace InterView_Task
             builder.Services.AddScoped<IAuth, AuthRepository>();
             builder.Services.AddScoped<IProduct, ProductRepository>();
             builder.Services.AddScoped<ITransaction, TransactionRepository>();
-           
+            builder.Services.AddScoped<IReport, ReportReposatory>();
+
             // Add services to the container.
             builder.Services.AddDbContext<dbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("CS")));

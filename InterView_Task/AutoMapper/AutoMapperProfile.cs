@@ -3,6 +3,7 @@ using InterView_Task.Models;
 using AutoMapper;
 using InterView_Task.DTOs.Transaction;
 using InterView_Task.Enums;
+using InterView_Task.DTOs.Reports;
 
 namespace InterView_Task.AutoMapper
 {
@@ -32,6 +33,13 @@ namespace InterView_Task.AutoMapper
            .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(_ => TransactionType.Transfer))
            .ForMember(dest => dest.TransactionDate, opt => opt.MapFrom(_ => DateTime.UtcNow))
            .ForMember(dest => dest.UserId, opt => opt.Ignore());
+
+            CreateMap<Product, LowStockReportDto>();
+
+
+            CreateMap<InventoryTransactions, TransactionHistoryDto>()
+           .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(src => src.TransactionType.ToString()));
+          
         }
     }
 }
