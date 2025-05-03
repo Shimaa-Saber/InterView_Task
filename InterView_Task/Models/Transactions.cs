@@ -6,10 +6,10 @@ namespace InterView_Task.Models
     public class InventoryTransactions
     {
         public int Id { get; set; }
-        public string ProductName { get; set; }
-        public decimal Price { get; set; }
+        public string ?ProductName { get; set; }
+        public decimal? Price { get; set; }
         public int Quantity { get; set; }
-        public DateTime TransactionDate { get; set; }
+        public DateTime ?TransactionDate { get; set; }
         public TransactionType TransactionType { get; set; }
         [ForeignKey("Product")]
         public int ProductId { get; set; }
@@ -20,7 +20,7 @@ namespace InterView_Task.Models
 
         public int? DestinationId { get; set; }
         [ForeignKey("User")]
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public Product ?Product { get; set; }
 
         public Warehouse? Source { get; set; }

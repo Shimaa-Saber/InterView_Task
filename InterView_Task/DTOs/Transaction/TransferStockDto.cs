@@ -7,7 +7,7 @@ namespace InterView_Task.DTOs.Transaction
         [Required]
         public int ProductId { get; set; }
 
-        [Range(1, int.MaxValue)]
+        [Range(1, 100)]
         public int Quantity { get; set; }
 
         [Required]

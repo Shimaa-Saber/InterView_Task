@@ -14,17 +14,18 @@ namespace InterView_Task.AutoMapper
             CreateMap<EditProductDto, Product>();
             CreateMap<Product, EditProductDto>();
 
-            CreateMap<AddStockDto, InventoryTransactions>()
-           .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(_ => TransactionType.AddStock));
+            CreateMap<AddStockDto, TransactionDto>()
+             .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(_ => TransactionType.AddStock));
+             
+          
 
             CreateMap<TransactionDto, InventoryTransactions>();
             CreateMap<InventoryTransactions, TransactionDto>();
 
-            CreateMap<RemoveStockDto, InventoryTransactions>()
-            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => -src.Quantity)) 
-            .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(_ => TransactionType.RemoveStock))
-            .ForMember(dest => dest.TransactionDate, opt => opt.MapFrom(_ => DateTime.UtcNow))
-            .ForMember(dest => dest.UserId, opt => opt.Ignore());
+            CreateMap<RemoveStockDto, TransactionDto>()
+            
+            .ForMember(dest => dest.TransactionType, opt => opt.MapFrom(_ => TransactionType.RemoveStock));
+            
 
 
             CreateMap<TransferStockDto, InventoryTransactions>()

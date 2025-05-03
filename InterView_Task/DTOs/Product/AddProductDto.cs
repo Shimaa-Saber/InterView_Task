@@ -12,7 +12,7 @@ namespace InterView_Task.DTOs.Product
         [Range(0.01, 1500)]
         public decimal Price { get; set; }
         [Required]
-
+        [Range(0, 100)]
         public int Quantity { get; set; }
         [StringLength(50)]
 

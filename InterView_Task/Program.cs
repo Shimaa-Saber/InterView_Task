@@ -1,6 +1,8 @@
 
 using InterView_Task.AutoMapper;
+using InterView_Task.Interfaces;
 using InterView_Task.Models;
+using InterView_Task.Repos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,9 @@ namespace InterView_Task
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddScoped<IProduct, ProductRepository>();
+            builder.Services.AddScoped<ITransaction, TransactionRepository>();
 
             // Add services to the container.
             builder.Services.AddDbContext<dbContext>(options =>

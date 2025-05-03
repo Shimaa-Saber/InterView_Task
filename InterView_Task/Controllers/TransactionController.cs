@@ -25,7 +25,7 @@ namespace InterView_Task.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddStock([FromBody] AddStockDto dto)
+        public async Task<IActionResult> AddStock([FromForm][FromBody] AddStockDto dto)
         {
           
             Product product =  _productRepository.GetById(dto.ProductId);
@@ -46,7 +46,7 @@ namespace InterView_Task.Controllers
 
 
         [HttpPost("remove")]
-        public async Task<IActionResult> RemoveStock([FromBody] RemoveStockDto dto)
+        public async Task<IActionResult> RemoveStock([FromForm][FromBody] RemoveStockDto dto)
         {
             Product product = _productRepository.GetById(dto.ProductId);
             if (product == null) return NotFound("Product not found");
@@ -66,7 +66,7 @@ namespace InterView_Task.Controllers
 
         [HttpPost("transfer")]
         public async Task<IActionResult> TransferStock(
-            [FromBody] TransferStockDto request)
+          [FromForm][FromBody] TransferStockDto request)
         {
             try
             {

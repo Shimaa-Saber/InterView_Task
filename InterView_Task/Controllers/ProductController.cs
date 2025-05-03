@@ -38,7 +38,7 @@ namespace InterView_Task.Controllers
             return Ok(product);
         }
         [HttpPost]
-        public IActionResult CreateProduct([FromBody] AddProductDto productDto)
+        public IActionResult CreateProduct([FromForm][FromBody] AddProductDto productDto)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace InterView_Task.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, [FromBody] EditProductDto productDto)
+        public IActionResult UpdateProduct(int id, [FromForm][FromBody] EditProductDto productDto)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace InterView_Task.Controllers
                 if (productDto != null)
                 {
                     Product product = _productRepository.GetById(id);
-                    _mapper.Map(product, productDto);
+                    _mapper.Map(productDto, product);
 
                     _productRepository.Update(product);
                     _productRepository.Save();
