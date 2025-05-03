@@ -1,5 +1,6 @@
 ﻿using InterView_Task.Interfaces;
 using InterView_Task.Repos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace InterView_Task.Controllers
         {
             _reportRepository = reportRepository;
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet("low-stock")]
         public async Task<IActionResult> GetLowStockReport(
         [FromQuery] string? category = null,
@@ -24,7 +26,7 @@ namespace InterView_Task.Controllers
             return Ok(results);
         }
 
-
+        [Authorize(Roles = "Admin")]
 
         [HttpGet("transaction-history")]
         public async Task<IActionResult> GetTransactionHistory(
