@@ -73,17 +73,7 @@ namespace InterView_Task.Repos
 
             return await query
                 .OrderByDescending(t => t.TransactionDate)
-               .Select(t => new TransactionHistoryDto
-               {
-                   Id = t.Id,
-                   ProductName = t.Product != null ? t.Product.Name : "Unknown",
-                   Source = t.Source != null ? t.Source.Name : "null",
-                   Destination = t.Destination != null ? t.Destination.Name : "null",
-                   Quantity = t.Quantity,
-                   TransactionDate = t.TransactionDate,
-                   User = t.User != null ? t.User.UserName : "null",
-                   TransactionType = t.TransactionType.ToString()
-               })
+                .ProjectTo<TransactionHistoryDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
     }

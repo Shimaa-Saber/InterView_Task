@@ -30,7 +30,10 @@ namespace InterView_Task
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
                            .AddEntityFrameworkStores<dbContext>()
                            .AddDefaultTokenProviders();
-            builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+            builder.Services.AddAutoMapper(typeof(ProductProfile));
+            builder.Services.AddAutoMapper(typeof(TransactionProfile));
+            builder.Services.AddAutoMapper(typeof(ReportProfile));
+           
 
 
             builder.Services.AddControllers();
